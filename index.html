@@ -69,31 +69,31 @@
     <script>
         const API_KEY = '8rbp1pbMnFQVZH4SfE0ofOPfl6cjYcoR'; // Replace with your Windy Webcams API key
 
-        async function searchWebcams() {
-            const query = document.getElementById('searchInput').value;
-            const url = `https://api.windy.com/api/webcams/v2/list/country=DK/category=live/orderby=popularity/limit=10?show=webcams:image,location,title&key=${API_KEY}`;
+async function searchWebcams() {
+    const query = document.getElementById('searchInput').value;
+    const url = `https://api.windy.com/webcams/api/v3/webcams?country=DK&category=live&orderby=popularity&limit=10&show=webcams:image,location,title&key=${API_KEY}`;
 
-            try {
-                const response = await fetch(url);
-                const data = await response.json();
-                const webcams = data.result.webcams;
-                const webcamList = document.getElementById('webcamList');
-                webcamList.innerHTML = '';
+    try {
+        const response = await fetch(url);
+        const data = await response.json();
+        const webcams = data.result.webcams;
+        const webcamList = document.getElementById('webcamList');
+        webcamList.innerHTML = '';
 
-                webcams.forEach(cam => {
-                    const item = document.createElement('div');
-                    item.className = 'webcam-item';
-                    item.innerHTML = `
-                        <h3>${cam.title}</h3>
-                        <p>${cam.location.city}, ${cam.location.region}</p>
-                        <iframe src="${cam.image.current.preview}" allowfullscreen></iframe>
-                    `;
-                    webcamList.appendChild(item);
-                });
-            } catch (error) {
-                console.error('Error fetching webcam data:', error);
-            }
-        }
+        webcams.forEach(cam => {
+            const item = document.createElement('div');
+            item.className = 'webcam-item';
+            item.innerHTML = `
+                <h3>${cam.title}</h3>
+                <p>${cam.location.city}, ${cam.location.region}</p>
+                <iframe src="${cam.image.current.preview}" allowfullscreen></iframe>
+            `;
+            webcamList.appendChild(item);
+        });
+    } catch (error) {
+        console.error('Error fetching webcam data:', error);
+    }
+}
     </script>
 </body>
 </html>
